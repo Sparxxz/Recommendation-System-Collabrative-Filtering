@@ -49,27 +49,27 @@ Image_URL_M varchar(255)  default NULL);
 cursor.execute('''
 
 INSERT INTO user(username,email,password,confirm,Age,Location,Past_Purchase)
-VALUES ("swayam","sw@gmail.com","pal","pal",21,"Bhubaneshwar",10),
-("atul","xyz@gmail.com","singh","singh",21, "Noida",75),
+VALUES ("Swayam","sw@gmail.com","pal","pal",21,"Bhubaneshwar",10),
+("Atul","xyz@gmail.com","singh","singh",21, "Noida",75),
 --------------------------------------------------------------
- ("nyc","nyc@gmail.com","nyc","nyc",NULL,"delhi",15),
- ("stockton","stockton@gmail.com","stockton","stockton",18,"Noida",0),
- ("moscow","moscow@gmail.com","moscow","moscow",NULL,"delhi",51),
- ("porto","porto@gmail.com","porto","porto",17,"Bhubaneshwar",25),
- ("farn","farnborough@gmail.com","farn","farn",NULL,"Bhubaneshwar",78),
- ("santa","santamonica@gmail.com","santa","santa",61,"gaziabad",1),
- ("washington","washing@gmail.com","washington","washington",NULL,"delhi",65),
- ("timmins","timmins@gmail.com","timmins","timmins",NULL,"Noida",35),
- ("german","germantown@gmail.com","german","german",NULL,"Bhubaneshwar",20),
- ("albace","albacete@gmail.com","albace","albace",26,"Noida",5),
- ("melbourne","melbourne@gmail.com","melbourne","melbourne",14,"delhi",0),
- ("fort","fort@gmail.com","fort","fort",NULL,"Bhubaneshwar",9),
- ("barci","barcelona@gmail.com","barci","barci",26,"gaziabad",69),
- ("polis","mediapolis@gmail.com","polis","polis",NULL,"gaziabad",49),
- ("calgary","calgary@gmail.com","calgary","calgary",NULL,"Noida",10),
- ("albu","albuquerque@gmail.com","albu","albu",NULL,"delhi",91),
- ("chesa","chesapeake@gmail.com","chesa","chesa",NULL,"gaziabad",21),
- ("rio","rio@gmail.com","rio","rio",25,"gaziabad",49);
+ ("Nyc","nyc@gmail.com","nyc","nyc",NULL,"delhi",15),
+ ("Stockton","stockton@gmail.com","stockton","stockton",18,"Noida",0),
+ ("Moscow","moscow@gmail.com","moscow","moscow",NULL,"delhi",51),
+ ("Porto","porto@gmail.com","porto","porto",17,"Bhubaneshwar",25),
+ ("Farn","farnborough@gmail.com","farn","farn",NULL,"Bhubaneshwar",78),
+ ("Santa","santamonica@gmail.com","santa","santa",61,"gaziabad",1),
+ ("Washington","washing@gmail.com","washington","washington",NULL,"delhi",65),
+ ("Timmins","timmins@gmail.com","timmins","timmins",NULL,"Noida",35),
+ ("German","germantown@gmail.com","german","german",NULL,"Bhubaneshwar",20),
+ ("Albace","albacete@gmail.com","albace","albace",26,"Noida",5),
+ ("Melbourne","melbourne@gmail.com","melbourne","melbourne",14,"delhi",0),
+ ("Fort","fort@gmail.com","fort","fort",NULL,"Bhubaneshwar",9),
+ ("Barci","barcelona@gmail.com","barci","barci",26,"gaziabad",69),
+ ("Polis","mediapolis@gmail.com","polis","polis",NULL,"gaziabad",49),
+ ("Calgary","calgary@gmail.com","calgary","calgary",NULL,"Noida",10),
+ ("Albu","albuquerque@gmail.com","albu","albu",NULL,"delhi",91),
+ ("Chesa","chesapeake@gmail.com","chesa","chesa",NULL,"gaziabad",21),
+ ("Rio","rio@gmail.com","rio","rio",25,"gaziabad",49);
 
 
 

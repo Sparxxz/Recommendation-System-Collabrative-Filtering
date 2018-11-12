@@ -73,10 +73,10 @@ def login():
 	if res:
 		cur.execute(find_userID,[(form.email.data),(form.password.data)])
 		res2=cur.fetchall()
-		print("=========================SHape===========",len(res2))
+		#print("=========================SHape===========",len(res2))
 		ui=res2[0][0]
 
-		print("----------------------user_id----",ui)
+		#print("----------------------user_id----",ui)
 		return redirect(url_for('recommend',user_id=ui))
 	else:
 		flash("User not found")
@@ -120,7 +120,7 @@ def recommend(user_id):
 	#making this setting to display full text in columns
 	pd.set_option('display.max_colwidth', -1)
 
-	#However, the value 0 is invalid and as this dataset was published in 2004, I have assumed the the years after 2006 to be 
+	#We have assumed the the years after 2006 to be 
 	#invalid keeping some margin in case dataset was updated thereafer
 	#setting invalid years as NaN
 	books.loc[(books.yearOfPublication.astype(np.int32) > 2006 )| (books.yearOfPublication.astype(np.int32) == 0),'yearOfPublication'] = np.NAN
@@ -146,7 +146,7 @@ def recommend(user_id):
 
 	users.dtypes
 
-	#In my view values below 5 and above 90 do not make much sense for our book rating case...hence replacing these by NaNs
+	#values below 5 and above 90 do not make much sense for our book rating case...hence replacing these by NaNs
 	users.loc[(users.Age > 90) | (users.Age < 5), 'Age'] = np.nan
 
 	#replacing NaNs with mean
@@ -155,7 +155,7 @@ def recommend(user_id):
 	#setting the data type as int
 	users.Age = users.Age.astype(np.int32)
 
-	#ratings dataset will have n_users*n_books entries if every user rated every item, this shows that the dataset is very sparse
+	
 	n_users = users.shape[0]
 	n_books = books.shape[0]
 	print(n_users * n_books)
@@ -167,7 +167,7 @@ def recommend(user_id):
 	ratings.head(5)
 
 
-	#ratings dataset should have books only which exist in our books dataset, unless new books are added to books dataset
+	
 	ratings_new = ratings[ratings.ISBN.isin(books.ISBN)]
 
 
@@ -184,17 +184,16 @@ def recommend(user_id):
 	print('The sparsity level of Book Crossing dataset is ' +  str(sparsity*100) + ' %')
 
 
-	#Hence segragating implicit and explict ratings datasets
+	#Segragating implicit and explict ratings datasets
 	ratings_explicit = ratings_new[ratings_new.bookRating != 0]
 	ratings_implicit = ratings_new[ratings_new.bookRating == 0]
 
 
 	#plotting count of bookRating
 	sns.countplot(data=ratings_explicit , x='bookRating')
-	#plt.show()
-	#It can be seen that higher ratings are more common amongst users and rating 8 has been rated highest number of times
+	plt.show()
 
-	#At this point , a simple popularity based recommendation system can be built based on count of user ratings for different books
+	#A simple popularity based recommendation system based on count of user ratings for different books
 	def new_user_recommendation():
 	    ratings_count = pd.DataFrame(ratings_explicit.groupby(['ISBN'])['bookRating'].sum())
 	    top10 = ratings_count.sort_values('bookRating', ascending = False).head(3)
@@ -202,7 +201,7 @@ def recommend(user_id):
 	    top=top10.merge(books, left_index = True, right_on = 'ISBN')
 	    return top
 
-	#Given below are top 10 recommendations based on popularity. It is evident that books authored by J.K. Rowling are most popular
+	
 
 
 	#Similarly segregating users who have given explicit ratings from 1-10 and those whose implicit behavior was tracked
@@ -210,8 +209,8 @@ def recommend(user_id):
 	users_imp_ratings = users[users.userID.isin(ratings_implicit.userID)]
 
 
-	#To cope up with computing power I have and to reduce the dataset size, I am considering users who have rated atleast 100 books
-	#and books which have atleast 100 ratings
+	#We are considering users who have rated atleast 1 books
+	#and books which have atleast 1 ratings
 	counts1 = ratings_explicit['userID'].value_counts()
 	ratings_explicit = ratings_explicit[ratings_explicit['userID'].isin(counts1[counts1 >= 1].index)]
 	counts = ratings_explicit['bookRating'].value_counts()
@@ -224,7 +223,6 @@ def recommend(user_id):
 	ISBN = ratings_matrix.columns
 	print(ratings_matrix.shape)
 	ratings_matrix.head()
-	#Notice that most of the values are NaN (undefined) implying absence of ratings
 
 	n_users = ratings_matrix.shape[0] #considering only those users who gave explicit ratings
 	n_books = ratings_matrix.shape[1]
@@ -303,6 +301,14 @@ def recommend(user_id):
 	print()
 	print(users.dtypes)
 
+	def predicting_user_based_rating(uid,iid):
+		return predict_userbased(uid,iid,ratings_matrix);
+	uid=5
+	iid='00003'
+	predicting_user_based_rating(uid,iid)
+
+	
+
 
 	#This function finds k similar items given the item_id and ratings matrix
 
@@ -366,7 +372,7 @@ def recommend(user_id):
 
 
 	#This function utilizes above functions to recommend items for item/user based approach and cosine/correlation. 
-	#Recommendations are made if the predicted rating for an item is >= to 6,and the items have not been rated already
+	
 	def recommendItem2(user_id, ratings, metric=metric,recommendtype=1):    
 	    if (user_id not in ratings.index.values) or type(user_id) is not int:
 	        print("User id should be a valid integer from this list :")
@@ -476,35 +482,31 @@ def recommend(user_id):
 	    str1=recom(userID)
 #===============================================================================================
 	loyal=0
-	if chk==1:
-		with sqlite3.connect("database.db") as con:
-			cur=con.cursor()
-		find_user=("SELECT Past_Purchase FROM user WHERE User_ID=?")
-		cur.execute(find_user,[userID])
-		pp=cur.fetchall()
-		ppp=pp[0][0]
-		#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		loyal=0
-		if ppp>50:
-			loyal=1
-		else:
-			loyal=0
-		#====================================
-		recomendi1=''
-		str12=new_user_recom()
-		str12=str12.astype(int)
-		chk=0
-		for i in range(len(str12)):
-			print(books.bookTitle[str12[i]])
-			recomendi1=recomendi1+books.bookTitle[str12[i]]+','
-		words1=recomendi1.split(",")
-		str2=words1
-		str2.pop()
+	
+#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	with sqlite3.connect("database.db") as con:
+		cur=con.cursor()
+	find_user=("SELECT Past_Purchase FROM user WHERE User_ID=?")
+	cur.execute(find_user,[userID])
+	pp=cur.fetchall()
+	ppp=pp[0][0]
+	#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+	if ppp>50 and chk==1:
+		loyal=1
 	else:
-		loyal=0	
-
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+		loyal=0
+	#====================================
+	recomendi1=''
+	str12=new_user_recom()
+	str12=str12.astype(int)
+	chk=0
+	for i in range(len(str12)):
+		print(books.bookTitle[str12[i]])
+		recomendi1=recomendi1+books.bookTitle[str12[i]]+','
+	words1=recomendi1.split(",")
+	str2=words1
+	str2.pop() 
 #-----------------------------------Discount__________________________________________________
 	print("===================str2------------",str2[2],"---------------",str1)
 	#urls1=''
