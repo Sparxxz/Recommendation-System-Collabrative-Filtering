@@ -1,7 +1,14 @@
 #Premier Experience for Loyal eCommerce Customers
--
-# dell_hackathon_iiitb_2018_aksit
+## dell_hackathon_iiitb_2018_aksit
 
-About
-------
-This project is a simple illustration of a Recommendation System to enhance the Premier Experience of Loyal eCommerce Customers
+###About
+- This project is a simple illustration of a Recommendation System to enhance the Premier Experience of Loyal eCommerce Customers
+- For simplicity we have worked only on books rating dataset
+
+###Layout
+- Identify the user as guest or existing user
+- If new user, promote for signup
+- For new users recommendatons are based on popularity index i.e. He/She will be recommended most popular items
+- For existing users recommendation are based on **Item-Based & User-Based Collabrative Filtering** 
+- **Item-Based Collabrative Filtering** is recommending items baased on *Item Similarity Index* i.e. items which user has purchased or                                             liked in past.
+- **User-Based Collabrative Filtering** is recommending items based on *User Similarity Index* i.e. items which other customers similar to                                         user likes.
