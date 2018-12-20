@@ -10,7 +10,7 @@
 - Identify the user as guest or existing user
 - If new user, promote for signup
 - For new users recommendations are based on popularity index i.e. He/She will be recommended most popular items
-- For existing users recommendation are based on **Item-Based & User-Based Collabrative Filtering** 
+- For existing users recommendations are based on **Item-Based & User-Based Collabrative Filtering** 
 - **Item-Based Collabrative Filtering** is recommending items baased on *Item Similarity Index* i.e. items which user has purchased or                                             liked in past.
 - **User-Based Collabrative Filtering** is recommending items based on *User Similarity Index* i.e. items which other customers similar to                                         user likes.
 
